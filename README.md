@@ -1,4 +1,4 @@
-Go Slide in GTG and Onlinebook
+Go Slide in GTG
 ==============
 
 Installation and Usage
@@ -9,19 +9,16 @@ Installation and Usage
 #### (1) Use Present of go package
     $ go get -u -v golang.org/x/tools/cmd/present
     $ go install golang.org/x/tools/cmd/present
-    $ git clone https://github.com/oneleo/GoPresent.git
+    $ git clone https://github.com/oneleo/GTG26LT-GOPATH-present
     $ present
 
     Browse: http://127.0.0.1:3999/
 
 #### (2) Browse Directly:
-    http://go-talks.appspot.com/github.com/oneleo/GoPresent/GTG22.slide
-    http://go-talks.appspot.com/github.com/oneleo/GoPresent/OnlineBookGo.slide
+    http://go-talks.appspot.com/github.com/oneleo/GTG26LT-GOPATH-present/GTG26.slide
     
 #### (3) Video Links (Chiniese):
-    [【線上讀書會】Golang 環境設定與安裝](https://youtu.be/AthOhhD0T6g)
-    [Golang Taiwan/Taipei Gathering #22](https://youtu.be/z4_aN-aFtPw)
-
+    
 Inspired By
 =============
 1. Evan Lin [In Love with Golang](http://go-talks.appspot.com/github.com/kkdai/GolangTalks/gdgfest/gdgfest.slide)
