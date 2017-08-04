@@ -1,0 +1,190 @@
+Golang Path
+詳細說明
+19:30 01 Aug 2017
+Tags: Golang, Environment Setup, 線上 go 讀書會
+
+陳敬翔
+中華電信, IaaS 服務專員
+oneleo@cht.com.tw
+https://www.facebook.com/oneleo760823
+@oneleo760823
+
+# --------------------------------------------------
+
+* 有一天在 Golang 讀書會群組有人提問道：VSC + Go 出現錯誤訊息
+
+.image ./images/OnlinebookLine.png 500 _
+
+# --------------------------------------------------
+
+* 後來才知道同學看的教學在 GOPATH 上設了多個參數
+
+.image ./images/MultiGOPATH.png 350 _
+
+# --------------------------------------------------
+
+* 原來 GOPATH 可以設置多個參數！？
+
+# --------------------------------------------------
+
+* 參考書籍
+
+.image ./images/LetsGoWithGo.jpg 500 _
+
+# --------------------------------------------------
+
+* 一般使用上，GOPATH 只會設置一個參數
+
+- 當使用 go get 指令 clone 第三方 Github 專案時，會將專案下載到 $GOPATH/src 內。
+
+- 在含有 void main() 函數檔案的目錄下使用 go build 指令，會建立可執行檔在此 void main() 函數檔案的旁邊。
+
+- 在含有 void main() 函數檔案的目錄下使用 go install 指令，會建立可執行檔在 $GOPATH/bin 內。
+
+- 在「不」含有 void main() 函數檔案的目錄下使用 go build 指令，不會有任何檔案被建立。
+
+- 在「不」含有 void main() 函數檔案的目錄下使用 go install 指令，會建立壓縮後的函數庫檔（*.a）在 $GOPATH/pkg 內。
+
+- 註：當 GOPATH 只有一個參數時，GOBIN 可以不用設置！（此時 GOBIN 為 $GOPATH/bin）
+
+# --------------------------------------------------
+
+* 但有時候卻又希望 GOPATH 可以有多個，目的在希望將第三方套件可與自己個人的工作目錄拆開，但這時會產生一些問題：
+
+- 當使用 go get 指令 clone 第三方 Github 專案時，會將專案下載到哪裡呢？
+
+- 在含有 void main() 函數檔案的目錄下使用 go build 指令，會建立可執行檔到哪裡呢？（假設檔案放在第二個工作目錄下）
+
+- 在含有 void main() 函數檔案的目錄下使用 go install 指令，會建立可執行檔到哪裡呢？（假設檔案放在第二個工作目錄下）
+
+- * 在「不」含有 void main() 函數檔案的目錄下使用 go build 指令，會建立函數庫檔（*.a）到哪裡呢？（假設檔案放在第二個工作目錄下）
+
+- * 在「不」含有 void main() 函數檔案的目錄下使用 go install 指令，會建立函數庫檔（*.a）到哪裡呢？（假設檔案放在第二個工作目錄下）
+
+- 註：當 GOPATH 有多個參數時，GOBIN 就一定要設置！（讓我們繼續看下去）
+
+# --------------------------------------------------
+
+* 使用 go get 指令 clone 第三方 Github 專案時，會將專案下載到哪裡？
+
+- 假設執行指令：$> go get -u -v github.com/golangtw/GolangTaiwanGathering
+
+    // 假設環境變數設置如下：
+    export GOROOT="/usr/local/go"
+    export GOPATH="$HOME/go:$HOME/mygo"
+    export GOBIN="$HOME/go/bin"
+    export PATH="$PATH:$GOROOT/bin:$GOBIN:$HOME/mygo/bin"
+
+- 你的答案是？
+
+.play -edit ./codePresent/MutiGopath-GoGet-Yes.go /OMIT START/,/OMIT END/
+
+.play -edit ./codePresent/MutiGopath-GoGet-No.go /OMIT START/,/OMIT END/
+
+# --------------------------------------------------
+
+* 在含有 void main() 函數檔案的目錄下使用 go build 指令，會建立可執行檔到哪裡呢？（假設檔案放在：$HOME/mygo/src/hello/hello.go）
+
+- 例如執行：$> go build "hello/"
+
+.play ./codePresent/hello.go /OMIT START/,/OMIT END/
+
+    // 假設環境變數設置如下：
+    export GOROOT="/usr/local/go"
+    export GOPATH="$HOME/go:$HOME/mygo"
+    export GOBIN="$HOME/go/bin"
+    export PATH="$PATH:$GOROOT/bin:$GOBIN:$HOME/mygo/bin"
+
+- 你的答案是？
+
+.play -edit ./codePresent/MutiGopath-MainBuild-No1.go /OMIT START/,/OMIT END/
+
+.play -edit ./codePresent/MutiGopath-MainBuild-No2.go /OMIT START/,/OMIT END/
+
+.play -edit ./codePresent/MutiGopath-MainBuild-Yes.go /OMIT START/,/OMIT END/
+
+# --------------------------------------------------
+
+* 在含有 void main() 函數檔案的目錄下使用 go install 指令，會建立可執行檔到哪裡呢？（假設檔案放在：$HOME/mygo/src/hello/hello.go）
+
+- 例如執行：$> go install "hello/"
+
+.play ./codePresent/hello.go /OMIT START/,/OMIT END/
+
+    // 假設環境變數設置如下：
+    export GOROOT="/usr/local/go"
+    export GOPATH="$HOME/go:$HOME/mygo"
+    export GOBIN="$HOME/go/bin"
+    export PATH="$PATH:$GOROOT/bin:$GOBIN:$HOME/mygo/bin"
+
+- 你的答案是？
+
+.play -edit ./codePresent/MutiGopath-MainInstall-Yes.go /OMIT START/,/OMIT END/
+
+.play -edit ./codePresent/MutiGopath-MainInstall-No1.go /OMIT START/,/OMIT END/
+
+.play -edit ./codePresent/MutiGopath-MainInstall-No2.go /OMIT START/,/OMIT END/
+
+# --------------------------------------------------
+
+* 在「不」含有 void main() 函數檔案的目錄下使用 go build 指令，會建立函數庫檔（*.a）到哪裡呢？（假設檔案放在：$HOME/mygo/src/mylib/mypkg.go）
+
+- 例如執行：$> go build "mylib/"
+
+.code ./codePresent/mypkg.go /OMIT START/,/OMIT END/
+
+    // 假設環境變數設置如下：
+    export GOROOT="/usr/local/go"
+    export GOPATH="$HOME/go:$HOME/mygo"
+    export GOBIN="$HOME/go/bin"
+    export PATH="$PATH:$GOROOT/bin:$GOBIN:$HOME/mygo/bin"
+
+- 你的答案是？
+
+.play -edit ./codePresent/MutiGopath-PackageBuild-No1.go /OMIT START/,/OMIT END/
+
+.play -edit ./codePresent/MutiGopath-PackageBuild-No2.go /OMIT START/,/OMIT END/
+
+# --------------------------------------------------
+
+* 在「不」含有 void main() 函數檔案的目錄下使用 go install 指令，會建立函數庫檔（*.a）到哪裡呢？（假設檔案放在：$HOME/mygo/src/mylib/mypkg.go）
+
+- 例如執行：$> go install "mylib/"
+
+.code ./codePresent/mypkg.go /OMIT START/,/OMIT END/
+
+    // 假設環境變數設置如下：
+    export GOROOT="/usr/local/go"
+    export GOPATH="$HOME/go:$HOME/mygo"
+    export GOBIN="$HOME/go/bin"
+    export PATH="$PATH:$GOROOT/bin:$GOBIN:$HOME/mygo/bin"
+
+- 你的答案是？
+
+.play -edit ./codePresent/MutiGopath-PackageInstall-No.go /OMIT START/,/OMIT END/
+
+.play -edit ./codePresent/MutiGopath-PackageInstall-Yes.go /OMIT START/,/OMIT END/
+
+# --------------------------------------------------
+
+* 最後一個問題：若兩個 GOPATH 有相同名稱的專案，執行 go install 或 go build 會發生什麼事呢？
+
+- 例如：$HOME/*go*/src/hello/hello.go 和 $HOME/*mygo*/src/hello/hello.go 同時存在
+- → 執行 $> go install "hello/" 又會在哪裡建立可執行檔呢？
+
+- 又假設：$HOME/*go*/src/mylib/mypkg.go 與 $HOME/*mygo*/src/mylib/mypkg.go 同時存在
+- → 執行 $> go install "mylib/" 又會在哪裡建立函數庫檔（*.a）呢？
+
+    // 假設環境變數設置如下：
+    export GOROOT="/usr/local/go"
+    export GOPATH="$HOME/go:$HOME/mygo"
+    export GOBIN="$HOME/go/bin"
+    export PATH="$PATH:$GOROOT/bin:$GOBIN:$HOME/mygo/bin"
+
+.play -edit ./codePresent/MutiGopath-SameProject.go /OMIT START/,/OMIT END/
+
+# --------------------------------------------------
+
+* 介紹完畢，感謝各位！
+
+# --------------------------------------------------
